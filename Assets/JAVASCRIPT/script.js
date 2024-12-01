@@ -1,4 +1,4 @@
-const BASE_URL = "https://3mtt-capstone-project-backend.fly.dev/http://localhost:8080";
+const BASE_URL = "https://3mtt-capstone-project-backend.fly.dev/";
 
 // Handle login
 async function handleLogin(event) {
@@ -42,7 +42,7 @@ async function handleSignup(event) {
 
         try {
             // Simulate sending a POST request to a server
-            const response = await fetch('https://mockapi.example.com/signup', {
+            const response = await fetch(`${BASE_URL}/auth/register`, {
                 method: 'POST', // HTTP method for sending data
                 headers: {
                     'Content-Type': 'application/json', // Specify the content type
