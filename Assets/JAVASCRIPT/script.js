@@ -43,9 +43,9 @@ async function handleSignup(event) {
         try {
             // Simulate sending a POST request to a server
             const response = await fetch(`${BASE_URL}/auth/register`, {
-                method: 'POST', // HTTP method for sending data
+                method: "POST", // HTTP method for sending data
                 headers: {
-                    'Content-Type': 'application/json', // Specify the content type
+                    "Content-Type": "application/json", // Specify the content type
                 },
                 body: JSON.stringify({
                     name, // Data sent to the server
