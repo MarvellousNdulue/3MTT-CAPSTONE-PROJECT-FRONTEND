@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://3mtt-capstone-project-backend.fly.dev/http://localhost:8080";
 
 // Handle login
 async function handleLogin(event) {
