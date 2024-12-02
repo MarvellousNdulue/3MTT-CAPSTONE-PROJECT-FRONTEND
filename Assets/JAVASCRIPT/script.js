@@ -29,49 +29,50 @@ async function handleLogin(event) {
 
 // Function to handle the signup form submission
 async function handleSignup(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault(); // Prevent default form submission behavior
 
     // Get the input values from the form
     const name = document.getElementById('signup-name').value.trim();
     const email = document.getElementById('signup-email').value.trim();
-    const password = document.getElementById('signup-password').value;
+    const password = document.getElementById('signup-password').value.trim();
 
-    // Simulate user registration (This is a placeholder for real backend logic)
-    if (name && email && password) {
-        console.log('User Registered:', { name, email }); // Log the user data (for debugging)
-
-        try {
-            // Simulate sending a POST request to a server
-            const response = await fetch(`${BASE_URL}/auth/register`, {
-                method: "POST", // HTTP method for sending data
-                headers: {
-                    "Content-Type": "application/json", // Specify the content type
-                },
-                body: JSON.stringify({
-                    name, // Data sent to the server
-                    email,
-                    password,
-                }),
-            });
-
-            // Parse the server response
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log('Server Response:', data); // Log the response for debugging
-                alert('Registration successful! Redirecting to login page...');
-                window.location.href = 'login.html'; // Redirect to the login page
-            } else {
-                // Handle server errors
-                alert(`Error: ${data.message || 'Unable to register. Please try again!'}`);
-            }
-        } catch (error) {
-            // Handle network errors
-            alert('Network error. Please check your connection and try again!');
-            console.error('Error:', error);
-        }
-    } else {
+    // Validate form inputs
+    if (!name || !email || !password) {
         alert('Please fill in all the fields!');
+        return;
+    }
+
+    // Disable the submit button during the request
+    const signupButton = document.getElementById('signup-button');
+    signupButton.disabled = true;
+
+    try {
+        // Send a POST request to the server
+        const response = await fetch(`${BASE_URL}/auth/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, password }),
+        });
+
+        // Parse the server response
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log('Server Response:', data);
+            alert('Registration successful! Redirecting to login page...');
+            window.location.href = 'login.html'; // Redirect to the login page
+        } else {
+            alert(`Error: ${data.message || 'Unable to register. Please try again!'}`);
+            console.error('Server Error Response:', data);
+        }
+    } catch (error) {
+        alert('Network error. Please check your connection and try again!');
+        console.error('Error:', error);
+    } finally {
+        // Re-enable the submit button
+        signupButton.disabled = false;
     }
 }
 
